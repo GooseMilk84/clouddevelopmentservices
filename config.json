@@ -1,0 +1,40 @@
+{
+  "projects": [
+    {
+      "title": "Locker Room UI",
+      "image": "assets/projects/locker-ui.png",
+      "tags": ["Interface", "Lua"],
+      "description": "A team locker system with a liquid-glass UIStroke effect, concave inner-corner rounding via duplicate-and-clip masking, and a mouse-driven camera pan for browsing gear."
+    },
+    {
+      "title": "What Is Your IQ?",
+      "image": "assets/projects/iq-quiz.png",
+      "tags": ["Game", "Monetization"],
+      "description": "A full quiz game with four UI pages, a 20-question auto-advancing flow, a purchasable countdown timer, developer products, gamepasses, and DataStore-backed progress saving."
+    },
+    {
+      "title": "Moderation Panel",
+      "image": "assets/projects/mod-panel.png",
+      "tags": ["Server-side", "Lua"],
+      "description": "An in-game moderation panel exposing the player data accessible server-side, built for quick action during live sessions."
+    },
+    {
+      "title": "AI Sidebar Plugin",
+      "image": "assets/projects/ai-plugin.png",
+      "tags": ["Studio Plugin", "Python"],
+      "description": "A Roblox Studio plugin with an AI chat sidebar and code suggestions, connected to a locally hosted model through a Python relay server and tunnel."
+    },
+    {
+      "title": "Error Scanner Plugin",
+      "image": "assets/projects/error-scanner.png",
+      "tags": ["Studio Plugin", "Lua"],
+      "description": "A Studio plugin that scans scripts for syntax issues, performance problems, deprecated APIs, and obfuscation, with clickable navigation straight to the offending line."
+    },
+    {
+      "title": "Team Selection UI",
+      "image": "assets/projects/team-select.png",
+      "tags": ["Interface", "Lua"],
+      "description": "A scrollable 3x2 team-card selection screen paired with server-side round logic."
+    }
+  ]
+}
