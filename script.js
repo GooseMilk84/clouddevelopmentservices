@@ -20,6 +20,12 @@ fetch('config.json')
     </p>`;
   });
 
+// ---------- Media type detection ----------
+const VIDEO_EXT = /\.(mp4|webm|mov|m4v|ogv)$/i;
+function isVideo(path) {
+  return typeof path === 'string' && VIDEO_EXT.test(path.split('?')[0]);
+}
+
 function renderProjects(list) {
   workGrid.innerHTML = '';
   list.forEach((project, i) => {
@@ -29,8 +35,15 @@ function renderProjects(list) {
     card.setAttribute('role', 'button');
     card.setAttribute('aria-label', `View details for ${project.title}`);
 
+    const src = project.media || project.image; // "media" is the current field, "image" kept for older configs
+    const mediaHTML = isVideo(src)
+      ? `<video class="work-card-media" src="${src}" muted loop playsinline autoplay
+           onerror="this.closest('.work-card').style.opacity=0.35"></video>`
+      : `<img class="work-card-media" src="${src}" alt="${project.title}"
+           onerror="this.style.opacity=0.15;this.style.background='#151a22'">`;
+
     card.innerHTML = `
-      <img src="${project.image}" alt="${project.title}" onerror="this.style.opacity=0.15;this.style.background='#151a22'">
+      ${mediaHTML}
       <div class="work-card-overlay">
         <span class="work-card-title">${project.title}</span>
         ${project.tags && project.tags[0] ? `<span class="work-card-tag">${project.tags[0]}</span>` : ''}
@@ -48,7 +61,7 @@ function renderProjects(list) {
 
 // ---------- Project detail overlay ----------
 const overlay = document.getElementById('projectOverlay');
-const overlayImage = document.getElementById('overlayImage');
+const overlayMedia = document.getElementById('overlayMedia');
 const overlayTitle = document.getElementById('overlayTitle');
 const overlayDesc = document.getElementById('overlayDesc');
 const overlayTags = document.getElementById('overlayTags');
@@ -58,8 +71,11 @@ function openProject(index) {
   const project = projects[index];
   if (!project) return;
 
-  overlayImage.src = project.image;
-  overlayImage.alt = project.title;
+  const src = project.media || project.image;
+  overlayMedia.innerHTML = isVideo(src)
+    ? `<video src="${src}" controls playsinline></video>`
+    : `<img src="${src}" alt="${project.title}">`;
+
   overlayTitle.textContent = project.title;
   overlayDesc.textContent = project.description || '';
 
@@ -76,6 +92,10 @@ function closeProject() {
   overlay.classList.remove('active');
   overlay.setAttribute('aria-hidden', 'true');
   document.body.style.overflow = '';
+
+  // stop any playing video when the overlay closes
+  const video = overlayMedia.querySelector('video');
+  if (video) video.pause();
 }
 
 closeOverlayBtn.addEventListener('click', closeProject);
